@@ -34,7 +34,8 @@ export function Slider({
         max={max}
         step={step}
         value={value}
-        aria-label={label}
+        aria-label={unit ? `${label} (${unit})` : label}
+        aria-valuetext={unit ? `${value} ${unit}` : `${value}`}
         onChange={(e) => onChange(parseFloat(e.target.value))}
         className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-line accent-orange"
       />

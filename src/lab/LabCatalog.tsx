@@ -7,15 +7,8 @@ import { GlassPanel } from '@/components/ui/GlassPanel'
 import { Pill } from '@/components/ui/Pill'
 import { cn } from '@/lib/cn'
 import { resolveLang } from '@/i18n'
-import { SIMULATIONS, type Accent } from '@/data/simulations'
+import { SIMULATIONS, ACCENT_TEXT } from '@/data/simulations'
 import { isBuilt } from './registry'
-
-const ACCENT: Record<Accent, string> = {
-  orange: 'text-orange',
-  pink: 'text-pink',
-  violet: 'text-violet',
-  amber: 'text-amber',
-}
 
 function FilterChip({ active, label, onClick }: { active: boolean; label: string; onClick: () => void }) {
   return (
@@ -80,7 +73,7 @@ export function LabCatalog() {
                   {t('filterGrade')} {s.grade}
                 </span>
               </div>
-              <h3 className={cn('font-display text-lg font-bold', ACCENT[s.accent])}>{s.name[lang]}</h3>
+              <h3 className={cn('font-display text-lg font-bold', ACCENT_TEXT[s.accent])}>{s.name[lang]}</h3>
               <code className="mt-auto font-mono text-xs text-muted">{s.formula}</code>
               {!built && (
                 <span className="font-mono text-[10px] uppercase tracking-widest text-amber">{t('comingSoon')}</span>

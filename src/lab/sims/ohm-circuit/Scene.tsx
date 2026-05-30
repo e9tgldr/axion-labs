@@ -24,6 +24,10 @@ const EDGES: [THREE.Vector2, THREE.Vector2][] = [
 const EDGE_LENGTHS = EDGES.map(([a, b]) => a.distanceTo(b))
 const PERIMETER = EDGE_LENGTHS.reduce((s, l) => s + l, 0)
 
+// Shared scratch — pointOnLoop is called for every dot each frame and its result
+// is consumed immediately, so reusing one Vector2 avoids per-frame allocations.
+const _p = new THREE.Vector2()
+
 /** Map a phase in [0,1) to a point on the loop perimeter (clockwise). */
 function pointOnLoop(phase: number): THREE.Vector2 {
   let target = ((phase % 1) + 1) % 1 * PERIMETER
@@ -32,11 +36,11 @@ function pointOnLoop(phase: number): THREE.Vector2 {
     if (target <= len) {
       const [a, b] = EDGES[i]
       const t = len > 0 ? target / len : 0
-      return new THREE.Vector2().lerpVectors(a, b, t)
+      return _p.lerpVectors(a, b, t)
     }
     target -= len
   }
-  return TL.clone()
+  return _p.copy(TL)
 }
 
 export default function Scene({ params, playing, resetKey, publish }: SimSceneProps) {

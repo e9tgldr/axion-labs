@@ -1,5 +1,4 @@
-import { useRef, useMemo } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import type { SimSceneProps } from '@/lab/types'
 import { lens } from './physics'
@@ -45,15 +44,12 @@ function Arrow({
   )
 }
 
-/** A thin glowing line between two points. */
+/** A thin glowing line between two points. The declarative bufferAttribute owns the
+ *  positions; a fresh Float32Array on each render (when from/to change) updates them. */
 function Ray({ from, to, color }: { from: THREE.Vector3; to: THREE.Vector3; color: string }) {
-  const ref = useRef<THREE.BufferGeometry>(null)
-  useMemo(() => {
-    if (ref.current) ref.current.setFromPoints([from, to])
-  }, [from, to])
   return (
     <line>
-      <bufferGeometry ref={ref} attach="geometry">
+      <bufferGeometry attach="geometry">
         <bufferAttribute
           attach="attributes-position"
           args={[new Float32Array([from.x, from.y, from.z, to.x, to.y, to.z]), 3]}
@@ -108,13 +104,15 @@ export default function Scene({ params, publish }: SimSceneProps) {
     }
   }, [focal, objDist])
 
-  useFrame(() => {
+  // Static analytic sim — publish only when inputs change (no per-frame work);
+  // OrbitControls still gets its frames from the canvas frameloop.
+  useEffect(() => {
     publish({
       imageDist: data.imageDist,
       magnification: data.magnification,
       imageType: data.real,
     })
-  })
+  }, [data, publish])
 
   const focalPos = Number.isFinite(data.f) ? data.f : POS_CLAMP
 

@@ -14,7 +14,7 @@ export function ControlPanel({
   const { t } = useTranslation('lab')
   return (
     <div className="flex flex-col gap-4 rounded-2xl border border-line bg-surface/50 p-5">
-      <h3 className="font-mono text-xs uppercase tracking-widest text-muted">{t('controls')}</h3>
+      <h2 className="font-mono text-xs uppercase tracking-widest text-muted">{t('controls')}</h2>
       {params.map((p) => (
         <Slider
           key={p.key}

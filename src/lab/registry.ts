@@ -13,5 +13,4 @@ export const SIM_MODULES: Record<string, () => Promise<{ default: SimDefinition 
   'lens-optics': () => import('./sims/lens-optics'),
 }
 
-export const builtIds = (): string[] => Object.keys(SIM_MODULES)
 export const isBuilt = (id: string): boolean => id in SIM_MODULES

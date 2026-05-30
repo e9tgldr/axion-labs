@@ -7,6 +7,13 @@ import { rk4Step, energy, type DPState, type DPParams } from './physics'
 const SCALE = 1.6 // world units per metre
 const PIVOT = new THREE.Vector3(0, 2.5, 0)
 const TRAIL_CAP = 200
+const UP = new THREE.Vector3(0, 1, 0)
+// Reusable scratch vectors so the per-frame loop allocates nothing (except the
+// one trail point that must persist).
+const _b1 = new THREE.Vector3()
+const _b2 = new THREE.Vector3()
+const _mid = new THREE.Vector3()
+const _dir = new THREE.Vector3()
 
 export default function Scene({ params, playing, resetKey, publish }: SimSceneProps) {
   const rod1 = useRef<THREE.Mesh>(null)
@@ -47,37 +54,29 @@ export default function Scene({ params, playing, resetKey, publish }: SimScenePr
     const y1 = PIVOT.y - params.L1 * SCALE * Math.cos(s.th1)
     const x2 = x1 + params.L2 * SCALE * Math.sin(s.th2)
     const y2 = y1 - params.L2 * SCALE * Math.cos(s.th2)
-    const b1 = new THREE.Vector3(x1, y1, 0)
-    const b2 = new THREE.Vector3(x2, y2, 0)
+    _b1.set(x1, y1, 0)
+    _b2.set(x2, y2, 0)
 
-    if (bob1.current) bob1.current.position.copy(b1)
-    if (bob2.current) bob2.current.position.copy(b2)
+    if (bob1.current) bob1.current.position.copy(_b1)
+    if (bob2.current) bob2.current.position.copy(_b2)
 
     // orient rod 1: pivot -> bob1
     if (rod1.current) {
-      const mid1 = PIVOT.clone().add(b1).multiplyScalar(0.5)
-      rod1.current.position.copy(mid1)
-      const len1 = PIVOT.distanceTo(b1)
-      rod1.current.scale.set(1, len1, 1)
-      rod1.current.quaternion.setFromUnitVectors(
-        new THREE.Vector3(0, 1, 0),
-        b1.clone().sub(PIVOT).normalize(),
-      )
+      _mid.copy(PIVOT).add(_b1).multiplyScalar(0.5)
+      rod1.current.position.copy(_mid)
+      rod1.current.scale.set(1, PIVOT.distanceTo(_b1), 1)
+      rod1.current.quaternion.setFromUnitVectors(UP, _dir.copy(_b1).sub(PIVOT).normalize())
     }
     // orient rod 2: bob1 -> bob2
     if (rod2.current) {
-      const mid2 = b1.clone().add(b2).multiplyScalar(0.5)
-      rod2.current.position.copy(mid2)
-      const len2 = b1.distanceTo(b2)
-      rod2.current.scale.set(1, len2, 1)
-      rod2.current.quaternion.setFromUnitVectors(
-        new THREE.Vector3(0, 1, 0),
-        b2.clone().sub(b1).normalize(),
-      )
+      _mid.copy(_b1).add(_b2).multiplyScalar(0.5)
+      rod2.current.position.copy(_mid)
+      rod2.current.scale.set(1, _b1.distanceTo(_b2), 1)
+      rod2.current.quaternion.setFromUnitVectors(UP, _dir.copy(_b2).sub(_b1).normalize())
     }
 
-    // fading trail of the lower bob
-    trailPts.current.push(b2.clone())
+    // fading trail of the lower bob (the one retained allocation per frame)
+    trailPts.current.push(_b2.clone())
     if (trailPts.current.length > TRAIL_CAP) trailPts.current.shift()
     if (trailGeo.current) trailGeo.current.setFromPoints(trailPts.current)
 

@@ -3,6 +3,14 @@ import type { Lang } from '@/i18n'
 export type Accent = 'orange' | 'pink' | 'violet' | 'amber'
 export type Localized = Record<Lang, string>
 
+/** Maps a sim accent to its Tailwind text-color class (shared by catalog + showcase). */
+export const ACCENT_TEXT: Record<Accent, string> = {
+  orange: 'text-orange',
+  pink: 'text-pink',
+  violet: 'text-violet',
+  amber: 'text-amber',
+}
+
 export interface Simulation {
   id: string
   name: Localized

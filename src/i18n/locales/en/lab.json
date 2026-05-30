@@ -8,6 +8,7 @@
   "pause": "Pause",
   "reset": "Reset",
   "dragHint": "Drag to rotate",
+  "canvasLabel": "Interactive 3D simulation",
   "comingSoon": "Coming soon",
   "backToLab": "Back to lab",
   "webglRequired": "3D view requires a WebGL-capable browser. Controls and readouts still work.",

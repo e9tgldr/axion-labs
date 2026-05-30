@@ -9,7 +9,7 @@ export function ReadoutPanel({ readouts, store }: { readouts: ReadoutSpec[]; sto
   const snap = useThrottledReadouts(store)
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-line bg-surface/50 p-5">
-      <h3 className="font-mono text-xs uppercase tracking-widest text-muted">{t('readouts')}</h3>
+      <h2 className="font-mono text-xs uppercase tracking-widest text-muted">{t('readouts')}</h2>
       <div className="grid grid-cols-2 gap-3">
         {readouts.map((r) => (
           <Readout

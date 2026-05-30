@@ -8,6 +8,7 @@
   "pause": "暂停",
   "reset": "重置",
   "dragHint": "拖动以旋转",
+  "canvasLabel": "交互式 3D 仿真",
   "comingSoon": "敬请期待",
   "backToLab": "返回实验室",
   "webglRequired": "3D 视图需要支持 WebGL 的浏览器。控制和读数仍可使用。",

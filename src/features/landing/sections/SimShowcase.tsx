@@ -10,16 +10,9 @@ import { Reveal } from '@/components/ui/Reveal'
 import { MiniSimFallback } from '@/components/ui/MiniSimFallback'
 import { heroEnabled } from '@/three/webgl'
 import { resolveLang } from '@/i18n'
-import { SIMULATIONS, type Accent } from '@/data/simulations'
+import { SIMULATIONS, ACCENT_TEXT } from '@/data/simulations'
 
 const MiniSimTeaser = lazy(() => import('@/three/MiniSimTeaser'))
-
-const ACCENT: Record<Accent, string> = {
-  orange: 'text-orange',
-  pink: 'text-pink',
-  violet: 'text-violet',
-  amber: 'text-amber',
-}
 
 export function SimShowcase() {
   const { t, i18n } = useTranslation('landing')
@@ -71,7 +64,7 @@ export function SimShowcase() {
                     {t('curriculum.gradeLabel')} {s.grade}
                   </span>
                 </div>
-                <h3 className={`font-display text-lg font-bold ${ACCENT[s.accent]}`}>{s.name[lang]}</h3>
+                <h3 className={`font-display text-lg font-bold ${ACCENT_TEXT[s.accent]}`}>{s.name[lang]}</h3>
                 <code className="mt-auto font-mono text-xs text-muted">{s.formula}</code>
               </GlassPanel>
             </Reveal>
