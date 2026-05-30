@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js'
+import { getSupabase } from './supabaseBrowser'
 import type { AuthClient, AuthUser, Plan, Profile } from './types'
 
 const toUser = (u: { id: string; email?: string | null } | null | undefined): AuthUser | null =>
@@ -15,11 +15,7 @@ const rowToProfile = (r: Record<string, unknown>): Profile => ({
 
 /** Real Supabase-backed AuthClient. Used when VITE_SUPABASE_URL is configured. */
 export function createSupabaseClient(): AuthClient {
-  const sb: SupabaseClient = createClient(
-    import.meta.env.VITE_SUPABASE_URL as string,
-    import.meta.env.VITE_SUPABASE_ANON_KEY as string,
-    { auth: { detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } },
-  )
+  const sb = getSupabase()
 
   const requireUid = async (): Promise<string> => {
     const { data } = await sb.auth.getUser()
