@@ -20,6 +20,9 @@ export function createFrameDecoder() {
     while ((nl = buffer.indexOf('\n')) >= 0) {
       const line = buffer.slice(0, nl).trim()
       buffer = buffer.slice(nl + 1)
+      // Malformed line throws by design — the wire format is produced by our own
+      // encodeFrame (mock + proxy), so a parse failure is corruption the caller
+      // (TutorProvider/proxyClient) should surface as an error frame, not swallow.
       if (line) out.push(JSON.parse(line) as TutorFrame)
     }
     return out

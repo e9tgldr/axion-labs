@@ -40,4 +40,19 @@ describe('frames wire format', () => {
     expect(dec.push(bytes.slice(0, cut))).toEqual([])
     expect(dec.push(bytes.slice(cut))).toEqual([{ type: 'token', text }])
   })
+
+  it('flush emits a trailing frame that arrived without a newline', () => {
+    const dec = createFrameDecoder()
+    const enc = new TextEncoder()
+    const b = enc.encode(encodeFrame({ type: 'token', text: 'tail' }))
+    expect(dec.push(b.slice(0, b.length - 1))).toEqual([]) // withhold the '\n'
+    expect(dec.flush()).toEqual([{ type: 'token', text: 'tail' }])
+  })
+
+  it('round-trips a done frame carrying usage', () => {
+    const dec = createFrameDecoder()
+    const enc = new TextEncoder()
+    const f: TutorFrame = { type: 'done', usage: { outputTokens: 42 } }
+    expect(dec.push(enc.encode(encodeFrame(f)))).toEqual([f])
+  })
 })
