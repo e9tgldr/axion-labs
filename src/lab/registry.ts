@@ -6,6 +6,11 @@ import type { SimDefinition } from './types'
  */
 export const SIM_MODULES: Record<string, () => Promise<{ default: SimDefinition }>> = {
   projectile: () => import('./sims/projectile'),
+  'double-pendulum': () => import('./sims/double-pendulum'),
+  'incline-friction': () => import('./sims/incline-friction'),
+  'ohm-circuit': () => import('./sims/ohm-circuit'),
+  waves: () => import('./sims/waves'),
+  'lens-optics': () => import('./sims/lens-optics'),
 }
 
 export const builtIds = (): string[] => Object.keys(SIM_MODULES)
