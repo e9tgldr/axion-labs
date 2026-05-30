@@ -4,10 +4,13 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 
 import mnCommon from './locales/mn/common.json'
 import mnLanding from './locales/mn/landing.json'
+import mnLab from './locales/mn/lab.json'
 import enCommon from './locales/en/common.json'
 import enLanding from './locales/en/landing.json'
+import enLab from './locales/en/lab.json'
 import zhCommon from './locales/zh/common.json'
 import zhLanding from './locales/zh/landing.json'
+import zhLab from './locales/zh/lab.json'
 
 export const LANGS = ['mn', 'en', 'zh'] as const
 export type Lang = (typeof LANGS)[number]
@@ -17,14 +20,14 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      mn: { common: mnCommon, landing: mnLanding },
-      en: { common: enCommon, landing: enLanding },
-      zh: { common: zhCommon, landing: zhLanding },
+      mn: { common: mnCommon, landing: mnLanding, lab: mnLab },
+      en: { common: enCommon, landing: enLanding, lab: enLab },
+      zh: { common: zhCommon, landing: zhLanding, lab: zhLab },
     },
     fallbackLng: 'en',
     supportedLngs: LANGS as unknown as string[],
     defaultNS: 'landing',
-    ns: ['common', 'landing'],
+    ns: ['common', 'landing', 'lab'],
     detection: {
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],

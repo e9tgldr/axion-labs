@@ -11,7 +11,7 @@ const flatten = (obj: Json, prefix = ''): string[] =>
   )
 
 describe('locale key parity', () => {
-  test.each(['common', 'landing'])(
+  test.each(['common', 'landing', 'lab'])(
     'all locales share identical "%s" keys',
     async (ns) => {
       const keySets = await Promise.all(

@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import LandingPage from '@/features/landing/LandingPage'
+import { LabCatalog } from '@/lab/LabCatalog'
+import { SimDetailPage } from '@/lab/SimDetailPage'
 import { ComingSoon } from '@/routes/ComingSoon'
 import { NotFound } from '@/routes/NotFound'
 
-const STUB_ROUTES = ['/lab', '/tutor', '/exams', '/pricing', '/login', '/dashboard']
+const STUB_ROUTES = ['/tutor', '/exams', '/pricing', '/login', '/dashboard']
 
 export default function App() {
   const { t } = useTranslation('landing')
@@ -22,6 +24,8 @@ export default function App() {
       <main id="main" tabIndex={-1} className="pt-16">
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/lab" element={<LabCatalog />} />
+          <Route path="/lab/:id" element={<SimDetailPage />} />
           {STUB_ROUTES.map((p) => (
             <Route key={p} path={p} element={<ComingSoon />} />
           ))}
