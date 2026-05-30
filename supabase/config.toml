@@ -1,0 +1,2 @@
+[functions.tutor-chat]
+verify_jwt = true
