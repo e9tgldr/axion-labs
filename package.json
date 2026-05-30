@@ -17,6 +17,7 @@
     "@fontsource/share-tech-mono": "^5.2.7",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
+    "@supabase/supabase-js": "^2.106.2",
     "clsx": "^2.1.1",
     "i18next": "^26.3.0",
     "i18next-browser-languagedetector": "^8.2.1",
