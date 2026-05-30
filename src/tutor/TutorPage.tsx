@@ -9,6 +9,7 @@ import { cn } from '@/lib/cn'
 import { resolveLang } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import { GRADES, type Grade } from '@/data/curriculum'
+import { isMockTutor } from './client'
 import { useTutor } from './useTutor'
 import { Markdown } from './Markdown'
 import type { TutorContext } from './types'
@@ -55,6 +56,22 @@ export function TutorPage() {
 
   const suggestions = [t('suggested1'), t('suggested2'), t('suggested3')]
   const isEmpty = messages.length === 0 && !streaming
+
+  // Live-mode sign-in gate: a live tutor needs an authenticated session for the
+  // Edge Function. In mock mode (`isMockTutor`) anonymous users still get the
+  // full tutor, so this never triggers in tests.
+  if (!isMockTutor && !user) {
+    return (
+      <Container className="py-12">
+        <GlassPanel glow="violet" className="mx-auto flex max-w-md flex-col items-center gap-4 py-10 text-center">
+          <span className="text-3xl">🔒</span>
+          <h1 className="font-display text-2xl font-bold">{t('signInTitle')}</h1>
+          <p className="text-muted">{t('signInBody')}</p>
+          <Button to="/login?from=/tutor">{t('signInCta')}</Button>
+        </GlassPanel>
+      </Container>
+    )
+  }
 
   return (
     <Container className="py-12">
