@@ -14,8 +14,9 @@ import { NotFound } from '@/routes/NotFound'
 // stays out of the initial bundle and only loads on /lab*.
 const LabCatalog = lazy(() => import('@/lab/LabCatalog').then((m) => ({ default: m.LabCatalog })))
 const SimDetailPage = lazy(() => import('@/lab/SimDetailPage').then((m) => ({ default: m.SimDetailPage })))
+const TutorPage = lazy(() => import('@/tutor/TutorPage').then((m) => ({ default: m.TutorPage })))
 
-const STUB_ROUTES = ['/tutor', '/exams', '/pricing']
+const STUB_ROUTES = ['/exams', '/pricing']
 
 export default function App() {
   const { t } = useTranslation('landing')
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/lab" element={<LabCatalog />} />
             <Route path="/lab/:id" element={<SimDetailPage />} />
+            <Route path="/tutor" element={<TutorPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dashboard" element={<RequireAuth><DashboardPage /></RequireAuth>} />
             {STUB_ROUTES.map((p) => (

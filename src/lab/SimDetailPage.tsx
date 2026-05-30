@@ -13,6 +13,7 @@ import { NotFound } from '@/routes/NotFound'
 import { useAuth } from '@/auth/useAuth'
 import { canAccessSim } from '@/auth/gating'
 import { FavoriteButton } from '@/components/ui/FavoriteButton'
+import { AskTutorButton } from '@/tutor/AskTutorButton'
 
 export function SimDetailPage() {
   const { id = '' } = useParams()
@@ -44,6 +45,7 @@ export function SimDetailPage() {
           <h1 className="font-display text-3xl font-bold sm:text-4xl">{meta.name[lang]}</h1>
           <Pill>{meta.topic[lang]}</Pill>
           {!locked && <FavoriteButton simId={id} />}
+          <AskTutorButton simId={id} />
         </div>
         <p className="max-w-2xl text-muted">{t(`sims.${id}.desc`)}</p>
         <code className="font-mono text-sm text-orange">{meta.formula}</code>
