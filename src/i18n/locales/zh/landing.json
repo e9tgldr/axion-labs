@@ -1,0 +1,135 @@
+{
+  "nav": {
+    "lab": "实验室",
+    "tutor": "AI 老师",
+    "exams": "考试",
+    "pricing": "价格",
+    "signIn": "登录",
+    "enter": "进入实验室"
+  },
+  "hero": {
+    "eyebrow": "AXION LABS // 物理仿真引擎",
+    "title": "掌握物理所需的一切工具 — 尽在一处",
+    "subtitle": "交互式 3D 仿真、24/7 AI 老师以及自适应考试。完整的物理实验室，就在你的浏览器中。",
+    "ctaPrimary": "进入实验室",
+    "ctaGoogle": "使用 Google 继续",
+    "trust": "全年课程 · 6–11 年级",
+    "r1l": "速度",
+    "r1v": "9.8",
+    "r1u": "m/s",
+    "r2l": "力",
+    "r2v": "42",
+    "r2u": "N",
+    "r3l": "能量",
+    "r3v": "120",
+    "r3u": "J"
+  },
+  "stats": {
+    "sims": "30+ 个仿真",
+    "grades": "6–11 年级",
+    "langs": "3 种语言",
+    "ai": "24/7 AI 老师"
+  },
+  "pillars": {
+    "eyebrow": "平台",
+    "title": "学习物理所需的一切工具，尽在一处",
+    "sim": {
+      "t": "交互式 3D 仿真",
+      "d": "进行交互式物理实验，并实时调整每一个参数。"
+    },
+    "test": {
+      "t": "测验与练习",
+      "d": "通过即时评分的测验与练习检验你的知识。"
+    },
+    "ai": {
+      "t": "AI 自适应学习",
+      "d": "一位 24/7 全天候、能因材施教的 AI 物理助教。"
+    }
+  },
+  "showcase": {
+    "eyebrow": "实验室",
+    "title": "覆盖每个主题的数十个仿真",
+    "subtitle": "从抛体运动到混沌摆 — 亲手改变变量来探索物理。",
+    "cta": "探索实验室",
+    "featured": "实时预览"
+  },
+  "tutor": {
+    "eyebrow": "AI 老师",
+    "title": "用你的语言为你服务的 24/7 物理老师",
+    "subtitle": "尽管提问 — 甚至可以发送题目的照片。配有公式的分步讲解。",
+    "userMsg": "为什么斜面上的小球比自由落体加速得更慢？",
+    "botMsg": "在斜面上只有沿斜面方向的重力分量起作用：a = g·sinθ。由于 sinθ ≤ 1，加速度总是小于 g。",
+    "placeholder": "提一个物理问题…",
+    "followup": "追问",
+    "withImage": "AI 物理导师 — 也可发送图片"
+  },
+  "exams": {
+    "eyebrow": "自适应考试",
+    "title": "AI 每次都生成全新的考试",
+    "subtitle": "18 道选择题 + 2 道开放题，难度自适应，AI 即时评分。",
+    "q": "一个物体自由下落 3 秒。它的速度是多少？(g = 9.8 m/s²)",
+    "optA": "29.4 m/s",
+    "optB": "9.8 m/s",
+    "optC": "3 m/s",
+    "optD": "98 m/s",
+    "scoreLabel": "AI 评分"
+  },
+  "curriculum": {
+    "eyebrow": "课程",
+    "title": "6–11 年级的全年物理课程",
+    "subtitle": "按年级、逐个主题规划的完整一年。",
+    "gradeLabel": "年级"
+  },
+  "pricing": {
+    "eyebrow": "价格",
+    "title": "免费开始，准备好再升级",
+    "perYear": "/ 年",
+    "trial": "每个付费方案都以 3 天免费试用开始。",
+    "student": "学生方案：6 个月 ₮49,999 · 1 年 ₮89,999",
+    "mostPopular": "最受欢迎",
+    "choose": "选择方案",
+    "free": { "n": "免费", "p": "₮0" },
+    "standard": { "n": "Standard", "p": "₮100,000" },
+    "premium": { "n": "Premium", "p": "₮249,999" }
+  },
+  "feat": {
+    "simsLimited": "有限的仿真",
+    "simsAll": "全部 30+ 个仿真",
+    "aiLimited": "有限的 AI 老师",
+    "aiTeacher": "AI 老师",
+    "aiUnlimited": "无限使用 AI 老师",
+    "testsBasic": "基础测验",
+    "testsAi": "AI 生成的测验",
+    "everything": "包含 Standard 的全部",
+    "priority": "优先支持"
+  },
+  "cta": {
+    "title": "准备好走进实验室了吗？",
+    "subtitle": "创建账户，开始你的 3 天免费试用。",
+    "button": "进入实验室"
+  },
+  "footer": {
+    "tagline": "物理，仿真化。",
+    "product": "产品",
+    "company": "公司",
+    "resources": "资源",
+    "legal": "法律",
+    "rights": "© 2026 Axion Labs。版权所有。",
+    "about": "关于",
+    "contact": "联系我们",
+    "docs": "文档",
+    "help": "帮助",
+    "privacy": "隐私",
+    "terms": "条款"
+  },
+  "comingSoon": {
+    "title": "敬请期待",
+    "body": "此区域将在后续阶段开放。请返回首页。",
+    "back": "返回首页"
+  },
+  "notFound": {
+    "title": "迷失在太空",
+    "body": "该页面已偏离轨道。",
+    "back": "返回首页"
+  }
+}

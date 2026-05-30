@@ -1,0 +1,135 @@
+{
+  "nav": {
+    "lab": "Lab",
+    "tutor": "AI Tutor",
+    "exams": "Exams",
+    "pricing": "Pricing",
+    "signIn": "Sign In",
+    "enter": "Enter Laboratory"
+  },
+  "hero": {
+    "eyebrow": "AXION LABS // PHYSICS SIMULATION ENGINE",
+    "title": "Every tool you need to master physics — in one place",
+    "subtitle": "Interactive 3D simulations, a 24/7 AI tutor, and adaptive exams. The whole physics laboratory, in your browser.",
+    "ctaPrimary": "Enter Laboratory",
+    "ctaGoogle": "Continue with Google",
+    "trust": "Annual curriculum · Grades 6–11",
+    "r1l": "VELOCITY",
+    "r1v": "9.8",
+    "r1u": "m/s",
+    "r2l": "FORCE",
+    "r2v": "42",
+    "r2u": "N",
+    "r3l": "ENERGY",
+    "r3v": "120",
+    "r3u": "J"
+  },
+  "stats": {
+    "sims": "30+ simulations",
+    "grades": "Grades 6–11",
+    "langs": "3 languages",
+    "ai": "24/7 AI tutor"
+  },
+  "pillars": {
+    "eyebrow": "Platform",
+    "title": "All the tools you need to learn physics in one place",
+    "sim": {
+      "t": "Interactive 3D Simulations",
+      "d": "Conduct interactive physics experiments and adjust every parameter in real time."
+    },
+    "test": {
+      "t": "Tests & Exercises",
+      "d": "Check your knowledge with tests and exercises graded instantly."
+    },
+    "ai": {
+      "t": "AI Adaptive Learning",
+      "d": "A 24/7 AI-powered physics teaching assistant that adapts to you."
+    }
+  },
+  "showcase": {
+    "eyebrow": "The Lab",
+    "title": "Dozens of simulations across every topic",
+    "subtitle": "From projectile motion to chaotic pendulums — explore physics by changing the variables yourself.",
+    "cta": "Explore the lab",
+    "featured": "LIVE PREVIEW"
+  },
+  "tutor": {
+    "eyebrow": "AI Tutor",
+    "title": "Your 24/7 physics tutor, in your language",
+    "subtitle": "Ask anything — even send a photo of a problem. Step-by-step explanations with formulas.",
+    "userMsg": "Why does a ball on an incline accelerate more slowly than in free fall?",
+    "botMsg": "On an incline only the component of gravity along the slope acts: a = g·sinθ. Since sinθ ≤ 1, the acceleration is always smaller than g.",
+    "placeholder": "Ask a physics question…",
+    "followup": "Ask follow-up",
+    "withImage": "AI physics tutor — you can also send images"
+  },
+  "exams": {
+    "eyebrow": "Adaptive Exams",
+    "title": "AI generates a fresh exam every time",
+    "subtitle": "18 multiple-choice + 2 open questions, adaptive difficulty, instant AI grading.",
+    "q": "A body falls freely for 3 s. What is its speed? (g = 9.8 m/s²)",
+    "optA": "29.4 m/s",
+    "optB": "9.8 m/s",
+    "optC": "3 m/s",
+    "optD": "98 m/s",
+    "scoreLabel": "AI score"
+  },
+  "curriculum": {
+    "eyebrow": "Curriculum",
+    "title": "Annual physics curriculum for grades 6–11",
+    "subtitle": "A full year mapped to your grade, topic by topic.",
+    "gradeLabel": "Grade"
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "Start free, upgrade when you’re ready",
+    "perYear": "/ year",
+    "trial": "Every paid plan starts with a 3-day free trial.",
+    "student": "Student plans: 6 months ₮49,999 · 1 year ₮89,999",
+    "mostPopular": "Most popular",
+    "choose": "Choose plan",
+    "free": { "n": "Free", "p": "₮0" },
+    "standard": { "n": "Standard", "p": "₮100,000" },
+    "premium": { "n": "Premium", "p": "₮249,999" }
+  },
+  "feat": {
+    "simsLimited": "Limited simulations",
+    "simsAll": "All 30+ simulations",
+    "aiLimited": "Limited AI tutor",
+    "aiTeacher": "AI tutor",
+    "aiUnlimited": "Unlimited AI tutor",
+    "testsBasic": "Basic tests",
+    "testsAi": "AI-generated tests",
+    "everything": "Everything in Standard",
+    "priority": "Priority support"
+  },
+  "cta": {
+    "title": "Ready to step into the laboratory?",
+    "subtitle": "Create your account and start your 3-day free trial.",
+    "button": "Enter Laboratory"
+  },
+  "footer": {
+    "tagline": "Physics, simulated.",
+    "product": "Product",
+    "company": "Company",
+    "resources": "Resources",
+    "legal": "Legal",
+    "rights": "© 2026 Axion Labs. All rights reserved.",
+    "about": "About",
+    "contact": "Contact",
+    "docs": "Docs",
+    "help": "Help",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "comingSoon": {
+    "title": "Coming soon",
+    "body": "This area unlocks in a later phase. Head back to the landing page.",
+    "back": "Back to home"
+  },
+  "notFound": {
+    "title": "Lost in space",
+    "body": "This page drifted out of orbit.",
+    "back": "Back to home"
+  }
+}
