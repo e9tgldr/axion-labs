@@ -33,3 +33,17 @@ create table public.tutor_usage (
 alter table public.tutor_usage enable row level security;
 create policy "own usage read" on public.tutor_usage for select using (auth.uid() = user_id);
 -- No client write policy: only the service role mutates usage.
+
+-- Atomic per-user-per-day usage increment, called by the tutor-chat Edge Function
+-- (service role). SECURITY: execute is restricted to service_role so an
+-- authenticated user cannot inflate another user's counter.
+create function public.bump_tutor_usage(p_user_id uuid, p_usage_date date)
+returns int language sql as $$
+  insert into public.tutor_usage (user_id, usage_date, count)
+  values (p_user_id, p_usage_date, 1)
+  on conflict (user_id, usage_date)
+  do update set count = public.tutor_usage.count + 1
+  returning count;
+$$;
+revoke execute on function public.bump_tutor_usage(uuid, date) from public;
+grant execute on function public.bump_tutor_usage(uuid, date) to service_role;
