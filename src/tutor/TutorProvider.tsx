@@ -56,6 +56,7 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
 
   const selectConversation = useCallback(
     (id: string) => {
+      setError(null)
       setActiveId(id)
       store.listMessages(id).then(setMessages)
     },
@@ -65,6 +66,7 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
   const newConversation = useCallback(() => {
     setActiveId(null)
     setMessages([])
+    setError(null)
   }, [])
 
   const stop = useCallback(() => abortRef.current?.abort(), [])
