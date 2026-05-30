@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { GlassPanel } from '@/components/ui/GlassPanel'
@@ -7,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import { cn } from '@/lib/cn'
 import { PLANS } from '@/data/pricing'
+import { useAuth } from '@/auth/useAuth'
 
 function Check() {
   return (
@@ -18,6 +20,8 @@ function Check() {
 
 export function Pricing() {
   const { t } = useTranslation('landing')
+  const { user, setPlan } = useAuth()
+  const navigate = useNavigate()
 
   return (
     <section className="border-t border-line py-24">
@@ -56,9 +60,22 @@ export function Pricing() {
                     </li>
                   ))}
                 </ul>
-                <Button variant={plan.highlight ? 'gradient' : 'outline'} to="/login" className="w-full">
-                  {t('pricing.choose')}
-                </Button>
+                {user ? (
+                  <Button
+                    variant={plan.highlight ? 'gradient' : 'outline'}
+                    className="w-full"
+                    onClick={async () => {
+                      await setPlan(plan.id)
+                      navigate('/dashboard')
+                    }}
+                  >
+                    {t('pricing.choose')}
+                  </Button>
+                ) : (
+                  <Button variant={plan.highlight ? 'gradient' : 'outline'} to="/login" className="w-full">
+                    {t('pricing.choose')}
+                  </Button>
+                )}
               </GlassPanel>
             </Reveal>
           ))}

@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import LandingPage from '@/features/landing/LandingPage'
+import { LoginPage } from '@/routes/LoginPage'
+import { DashboardPage } from '@/routes/DashboardPage'
+import { RequireAuth } from '@/auth/RequireAuth'
 import { ComingSoon } from '@/routes/ComingSoon'
 import { NotFound } from '@/routes/NotFound'
 
@@ -12,7 +15,7 @@ import { NotFound } from '@/routes/NotFound'
 const LabCatalog = lazy(() => import('@/lab/LabCatalog').then((m) => ({ default: m.LabCatalog })))
 const SimDetailPage = lazy(() => import('@/lab/SimDetailPage').then((m) => ({ default: m.SimDetailPage })))
 
-const STUB_ROUTES = ['/tutor', '/exams', '/pricing', '/login', '/dashboard']
+const STUB_ROUTES = ['/tutor', '/exams', '/pricing']
 
 export default function App() {
   const { t } = useTranslation('landing')
@@ -31,6 +34,8 @@ export default function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/lab" element={<LabCatalog />} />
             <Route path="/lab/:id" element={<SimDetailPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/dashboard" element={<RequireAuth><DashboardPage /></RequireAuth>} />
             {STUB_ROUTES.map((p) => (
               <Route key={p} path={p} element={<ComingSoon />} />
             ))}

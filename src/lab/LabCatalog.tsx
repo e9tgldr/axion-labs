@@ -9,6 +9,9 @@ import { cn } from '@/lib/cn'
 import { resolveLang } from '@/i18n'
 import { SIMULATIONS, ACCENT_TEXT } from '@/data/simulations'
 import { isBuilt } from './registry'
+import { useAuth } from '@/auth/useAuth'
+import { canAccessSim } from '@/auth/gating'
+import { FavoriteButton } from '@/components/ui/FavoriteButton'
 
 function FilterChip({ active, label, onClick }: { active: boolean; label: string; onClick: () => void }) {
   return (
@@ -28,6 +31,7 @@ function FilterChip({ active, label, onClick }: { active: boolean; label: string
 
 export function LabCatalog() {
   const { t, i18n } = useTranslation('lab')
+  const { user, profile } = useAuth()
   const lang = resolveLang(i18n.language)
   const [topic, setTopic] = useState<string | null>(null)
   const [grade, setGrade] = useState<number | null>(null)
@@ -60,32 +64,42 @@ export function LabCatalog() {
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((s) => {
           const built = isBuilt(s.id)
+          const locked = built && !canAccessSim(profile?.plan ?? null, s.id)
+          const openable = built && !locked
           const card = (
             <GlassPanel
               className={cn(
                 'flex h-full flex-col gap-3',
-                built ? 'transition-all hover:-translate-y-1 hover:border-violet/50' : 'opacity-60',
+                openable ? 'transition-all hover:-translate-y-1 hover:border-violet/50' : 'opacity-70',
               )}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-2">
                 <Pill>{s.topic[lang]}</Pill>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
-                  {t('filterGrade')} {s.grade}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
+                    {t('filterGrade')} {s.grade}
+                  </span>
+                  {openable && <FavoriteButton simId={s.id} />}
+                </div>
               </div>
               <h3 className={cn('font-display text-lg font-bold', ACCENT_TEXT[s.accent])}>{s.name[lang]}</h3>
               <code className="mt-auto font-mono text-xs text-muted">{s.formula}</code>
               {!built && (
                 <span className="font-mono text-[10px] uppercase tracking-widest text-amber">{t('comingSoon')}</span>
               )}
+              {locked && (
+                <span className="font-mono text-[10px] uppercase tracking-widest text-violet">
+                  🔒 {t('auth:locked')}
+                </span>
+              )}
             </GlassPanel>
           )
-          return built ? (
-            <Link key={s.id} to={`/lab/${s.id}`} className="block">
+          if (!built) return <div key={s.id}>{card}</div>
+          const to = locked ? (user ? '/dashboard' : '/login') : `/lab/${s.id}`
+          return (
+            <Link key={s.id} to={to} className="block">
               {card}
             </Link>
-          ) : (
-            <div key={s.id}>{card}</div>
           )
         })}
       </div>

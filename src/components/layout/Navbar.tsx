@@ -5,6 +5,8 @@ import { cn } from '@/lib/cn'
 import { Logo } from '@/components/ui/Logo'
 import { Button } from '@/components/ui/Button'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { AccountMenu } from './AccountMenu'
+import { useAuth } from '@/auth/useAuth'
 
 const LINKS = [
   { to: '/lab', key: 'nav.lab' },
@@ -15,6 +17,7 @@ const LINKS = [
 
 export function Navbar() {
   const { t } = useTranslation('landing')
+  const { user } = useAuth()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -68,12 +71,18 @@ export function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           <LanguageSwitcher />
-          <Button variant="ghost" size="sm" to="/login">
-            {t('nav.signIn')}
-          </Button>
-          <Button variant="gradient" size="sm" to="/login">
-            {t('nav.enter')}
-          </Button>
+          {user ? (
+            <AccountMenu />
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" to="/login">
+                {t('nav.signIn')}
+              </Button>
+              <Button variant="gradient" size="sm" to="/login">
+                {t('nav.enter')}
+              </Button>
+            </>
+          )}
         </div>
 
         <button
@@ -102,9 +111,15 @@ export function Navbar() {
             ))}
             <div className="mt-2 flex items-center justify-between gap-3">
               <LanguageSwitcher />
-              <Button variant="gradient" size="sm" to="/login">
-                {t('nav.enter')}
-              </Button>
+              {user ? (
+                <Button variant="gradient" size="sm" to="/dashboard" onClick={() => setOpen(false)}>
+                  {t('auth:myDashboard')}
+                </Button>
+              ) : (
+                <Button variant="gradient" size="sm" to="/login" onClick={() => setOpen(false)}>
+                  {t('nav.enter')}
+                </Button>
+              )}
             </div>
           </div>
         </div>
