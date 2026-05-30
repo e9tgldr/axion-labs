@@ -42,6 +42,13 @@ function encodeFrame(frame: unknown): string {
   return JSON.stringify(frame) + '\n'
 }
 
+// The client prepends a volatile context preamble "(Context: …)\n\n" to the first
+// user turn for the model; strip it from the PERSISTED copy so stored history shows
+// only what the student typed (keeps live mode consistent with the demo store).
+function stripContextPreamble(text: string): string {
+  return text.replace(/^\(Context: [^)]*\)\n\n/, '')
+}
+
 /** JSON helper that always carries CORS headers. */
 function json(body: unknown, status: number): Response {
   return new Response(JSON.stringify(body), {
@@ -318,7 +325,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
         .maybeSingle()
 
       const conversationId = conv?.id ?? null
-      const userTurn = lastUser?.content ?? ''
+      // Strip the volatile context preamble so the persisted user turn matches the
+      // raw text the student typed (the model still received the preamble above).
+      const userTurn = stripContextPreamble(lastUser?.content ?? '')
 
       if (conversationId) {
         const rows = [

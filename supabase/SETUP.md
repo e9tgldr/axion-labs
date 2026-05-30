@@ -106,6 +106,10 @@ demo/mock tutor — no configuration toggle needed.
 - **Messages are insertable only by the service role.** Clients have **SELECT-only** RLS on
   `messages` and `tutor_usage`; the Edge Function writes both the user and assistant turns (and
   the usage counter) with the service-role key. A signed-in user can read only their own rows.
+- **Persisted user turn has the context preamble stripped server-side.** The client prepends a
+  volatile `(Context: …)` preamble to the first user turn for the model; the function strips it
+  before writing to `messages`, so reloaded history shows only what the student typed (live mode
+  matches the demo/localStorage store).
 
 ### Deploy-time checklist (can't be tested without a live project)
 These need a verification pass against your deployed project — they aren't covered by the local
