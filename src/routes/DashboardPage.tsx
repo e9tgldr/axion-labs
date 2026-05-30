@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { PlanBadge } from '@/components/ui/PlanBadge'
 import { cn } from '@/lib/cn'
 import { useAuth } from '@/auth/useAuth'
+import { useTutor } from '@/tutor/useTutor'
 import { resolveLang } from '@/i18n'
 import { SIMULATIONS } from '@/data/simulations'
 import type { Plan } from '@/auth/types'
@@ -17,6 +18,7 @@ export function DashboardPage() {
   const { t, i18n } = useTranslation('auth')
   const lang = resolveLang(i18n.language)
   const { user, profile, favorites, setPlan, updateProfile, toggleFavorite, signOut } = useAuth()
+  const { conversations, selectConversation } = useTutor()
   const navigate = useNavigate()
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(profile?.displayName ?? '')
@@ -137,6 +139,31 @@ export function DashboardPage() {
           )}
         </GlassPanel>
       </div>
+
+      {/* recent conversations */}
+      <GlassPanel className="mt-6 flex flex-col gap-4">
+        <h2 className="font-mono text-xs uppercase tracking-widest text-muted">{t('tutor:history')}</h2>
+        {conversations.length === 0 ? (
+          <p className="text-sm text-muted">{t('tutor:noHistory')}</p>
+        ) : (
+          <ul className="flex flex-col gap-2">
+            {[...conversations].reverse().slice(0, 5).map((conv) => (
+              <li
+                key={conv.id}
+                className="flex items-center justify-between gap-3 rounded-xl border border-line bg-surface/50 px-4 py-2.5"
+              >
+                <Link
+                  to="/tutor"
+                  onClick={() => selectConversation(conv.id)}
+                  className="text-sm text-text hover:text-violet"
+                >
+                  {conv.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </GlassPanel>
     </Container>
   )
 }
