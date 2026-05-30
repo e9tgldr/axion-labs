@@ -653,7 +653,7 @@ export function mockClient(): LLMClient {
 
 - [ ] **Step 4: Run tests — expect PASS**
 
-Run: `npx vitest run src/tutor/mockClient` — Expected: PASS (5 tests).
+Run: `npx vitest run src/tutor/mockClient` — Expected: PASS (6 tests).
 
 - [ ] **Step 5: Commit**
 
@@ -1098,7 +1098,7 @@ describe('Markdown', () => {
 
 - [ ] **Step 4: Run tests — expect PASS**
 
-Run: `npx vitest run src/tutor/Markdown` — Expected: PASS (2 tests).
+Run: `npx vitest run src/tutor/Markdown` — Expected: PASS (3 tests).
 
 - [ ] **Step 5: Commit**
 
