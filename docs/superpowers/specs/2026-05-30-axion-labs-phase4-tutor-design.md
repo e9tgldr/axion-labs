@@ -19,7 +19,7 @@ Add the **24/7 AI physics tutor** to Axion Labs: a trilingual (MN/EN/ZH) streami
 - **Build order:** two slices (§3). **Slice 1** ships the whole tutor on the mock with no backend. **Slice 2** adds the real Edge Function + tables + RLS.
 
 ### Out of scope (Phase 4b or later)
-Exam generation/grading; real billing/payments (plan stays the Phase-3 demo switch); per-token incremental KaTeX; conversation search; voice; image input; an admin moderation console.
+Exam generation/grading; real billing/payments (plan stays the Phase-3 demo switch); per-token incremental KaTeX; message regeneration; conversation search; voice; image input; an admin moderation console.
 
 ---
 
@@ -85,7 +85,7 @@ export interface LLMClient {
 }
 ```
 
-The `TutorFrame` union and its newline-delimited-JSON encoding live in **`frames.ts`** as pure functions (`encodeFrame`, `parseFrames`, plus a `decodeChunks` helper using `TextDecoder({stream:true})`). Both the mock and the proxy's reader loop consume the same parser, and it is unit-tested directly (§8) — so the hardest, least test-covered transport code (multi-byte UTF-8 split across chunk boundaries) has real coverage even though the live function never runs in tests.
+The `TutorFrame` union and its newline-delimited-JSON encoding live in **`frames.ts`** as pure functions (`encodeFrame`, plus a stateful `createFrameDecoder` whose `push`/`flush` use `TextDecoder({stream:true})`). Both the mock and the proxy's reader loop consume the same decoder, and it is unit-tested directly (§8) — so the hardest, least test-covered transport code (multi-byte UTF-8 split across chunk boundaries) has real coverage even though the live function never runs in tests.
 
 ### 2.2 Client selection (`client.ts`)
 ```ts
@@ -206,7 +206,7 @@ export const supabase = createClient(
 
 ## 8. Tutor UX details
 
-- **`/tutor` page:** streamed message list, input box, suggested-prompt chips, regenerate, "new chat", and a conversation history sidebar (from the active store). The route is **not** wrapped in `RequireAuth` (mock-mode anon is allowed); the live-mode sign-in gate is conditional (§7).
+- **`/tutor` page:** streamed message list, input box, suggested-prompt chips, "new chat", and a conversation history sidebar (from the active store). The route is **not** wrapped in `RequireAuth` (mock-mode anon is allowed); the live-mode sign-in gate is conditional (§7).
 - **Context-aware launch:** `AskTutorButton` renders on `SimDetailPage` **even when the sim is locked** (asking the tutor a question is not sim access). It links `/tutor?sim=${id}&topic=${encodeURIComponent(meta.topic[lang])}&grade=${meta.grade}`, sourcing grade + topic from the `SIMULATIONS` catalog `meta` (computed at line 22, available before the lock check) — **not** from `Profile`, which has no `grade`. `TutorPage` reads these via `useSearchParams` into `TutorContext`. The navbar entry opens the general tutor (neutral grade band, no topic). *(Future: an optional `profile.grade` for the general tutor — deliberately out of Phase 4 scope to avoid touching the Phase-3 auth contract.)*
 - **Formula rendering (`Markdown.tsx`):** `react-markdown` + `remark-math` + `rehype-katex`, `katex.css` imported once. Render the assistant message **on stream `complete`, not per token** — rendering a half-streamed `$\frac{1` throws, and per-token re-parse is a perf cost on low-end devices and causes lab-HUD layout jump. During streaming show raw text in a reserved-height bubble; swap to rendered markdown/KaTeX at `done`. Pin one math dialect (`$…$` / `$$…$$`) in the system prompt and run a delimiter normalizer (`\(…\)`→`$`, `\[…\]`→`$$`, strip code-fenced math) once at completion, wrapped in try/catch with a raw-text fallback.
 - **Trilingual:** all UI chrome in a new `tutor` i18n namespace; replies in the active UI language. **Namespace wiring touches 4 sites:** the 3 imports + the `resources` object + the `ns` array in `src/i18n/index.ts`, **and** `keyparity.test.ts`. To stop the parity test drifting, refactor it to import the `ns` array (or a shared `NS` constant) from `index.ts` instead of its hardcoded `['common','landing','lab','auth']`. `tutor.json` is authored MN-first with identical key trees across `mn/en/zh`. (Note: actual `fallbackLng` is `'en'`, `defaultNS` is `'landing'`.)
@@ -228,7 +228,7 @@ Grade/topic/language are passed as **structured** fields in the volatile preambl
 
 All tests run against the **mock**, no network (the established pattern). `tsc --noEmit` (strict + `noUnusedLocals`/`noUnusedParameters` — prefix intentionally-unused params with `_`, precedent `demoClient` `_password`), `vitest run`, and `tsc --noEmit && vite build` all green; Playwright shot of `/tutor`.
 
-- **`frames.ts`** (the highest-value unit tests): `encodeFrame`/`parseFrames` round-trip; partial frame buffered across chunks; **a multi-byte Cyrillic and a Chinese character split across two byte chunks** decode intact via `TextDecoder({stream:true})`.
+- **`frames.ts`** (the highest-value unit tests): `encodeFrame`/`createFrameDecoder` round-trip; partial frame buffered across chunks; **a multi-byte Cyrillic and a Chinese character split across two byte chunks** decode intact via `TextDecoder({stream:true})`.
 - **`gating.ts`:** 5/day free vs unlimited paid; day rollover; blocked state.
 - **`mockClient`:** `stream()` yields `token` frames then `done`; topic-aware seeding changes the canned answer; safety canned answers stay on-topic.
 - **`systemPrompt.ts`:** frozen block is byte-stable across calls (cache-safe); volatile preamble carries grade/topic/language; language line matches the active locale.
