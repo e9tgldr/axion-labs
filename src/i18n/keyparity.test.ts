@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { LANGS } from './index'
+import { LANGS, NS } from './index'
 
 type Json = Record<string, unknown>
 
@@ -11,7 +11,7 @@ const flatten = (obj: Json, prefix = ''): string[] =>
   )
 
 describe('locale key parity', () => {
-  test.each(['common', 'landing', 'lab', 'auth'])(
+  test.each(NS as unknown as string[])(
     'all locales share identical "%s" keys',
     async (ns) => {
       const keySets = await Promise.all(
