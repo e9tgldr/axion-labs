@@ -1,6 +1,7 @@
 import { useMemo, useRef } from 'react'
 import { Canvas, useFrame, type ThreeElements } from '@react-three/fiber'
 import * as THREE from 'three'
+import { useCanvasActive } from './useCanvasActive'
 
 const ORANGE = new THREE.Color('#fb923c')
 const VIOLET = new THREE.Color('#a855f7')
@@ -83,10 +84,13 @@ function Rig({ children }: { children: React.ReactNode }) {
 }
 
 export default function HeroScene() {
+  const { ref, active } = useCanvasActive()
   return (
+    <div ref={ref} className="h-full w-full">
     <Canvas
       camera={{ position: [0, 0, 8], fov: 45 }}
       dpr={[1, 1.8]}
+      frameloop={active ? 'always' : 'never'}
       gl={{ antialias: true, alpha: true }}
       style={{ pointerEvents: 'none' }}
     >
@@ -109,5 +113,6 @@ export default function HeroScene() {
         <ElectronRing radius={2.7} color={VIOLET} speed={0.55} rotation={[1.9, 0.8, 1.2]} />
       </Rig>
     </Canvas>
+    </div>
   )
 }

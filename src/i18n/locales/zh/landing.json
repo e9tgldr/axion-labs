@@ -61,7 +61,8 @@
     "botMsg": "在斜面上只有沿斜面方向的重力分量起作用：a = g·sinθ。由于 sinθ ≤ 1，加速度总是小于 g。",
     "placeholder": "提一个物理问题…",
     "followup": "追问",
-    "withImage": "AI 物理导师 — 也可发送图片"
+    "withImage": "AI 物理导师 — 也可发送图片",
+    "attachment": "题目.jpg"
   },
   "exams": {
     "eyebrow": "自适应考试",
@@ -131,5 +132,11 @@
     "title": "迷失在太空",
     "body": "该页面已偏离轨道。",
     "back": "返回首页"
+  },
+  "a11y": {
+    "skip": "跳到内容",
+    "menu": "菜单",
+    "language": "语言",
+    "home": "Axion Labs 首页"
   }
 }

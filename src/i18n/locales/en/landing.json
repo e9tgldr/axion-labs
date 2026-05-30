@@ -61,7 +61,8 @@
     "botMsg": "On an incline only the component of gravity along the slope acts: a = g·sinθ. Since sinθ ≤ 1, the acceleration is always smaller than g.",
     "placeholder": "Ask a physics question…",
     "followup": "Ask follow-up",
-    "withImage": "AI physics tutor — you can also send images"
+    "withImage": "AI physics tutor — you can also send images",
+    "attachment": "problem.jpg"
   },
   "exams": {
     "eyebrow": "Adaptive Exams",
@@ -131,5 +132,11 @@
     "title": "Lost in space",
     "body": "This page drifted out of orbit.",
     "back": "Back to home"
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "menu": "Menu",
+    "language": "Language",
+    "home": "Axion Labs home"
   }
 }

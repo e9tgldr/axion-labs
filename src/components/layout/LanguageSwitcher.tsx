@@ -1,19 +1,17 @@
 import { useTranslation } from 'react-i18next'
-import { LANGS, type Lang } from '@/i18n'
+import { LANGS, resolveLang, type Lang } from '@/i18n'
 import { cn } from '@/lib/cn'
 
 const SHORT: Record<Lang, string> = { mn: 'МН', en: 'EN', zh: '中' }
 
 export function LanguageSwitcher({ className }: { className?: string }) {
-  const { i18n } = useTranslation()
-  const current = (LANGS as readonly string[]).includes(i18n.language)
-    ? (i18n.language as Lang)
-    : 'mn'
+  const { t, i18n } = useTranslation('landing')
+  const current = resolveLang(i18n.language)
 
   return (
     <div
       role="group"
-      aria-label="Language"
+      aria-label={t('a11y.language')}
       className={cn(
         'inline-flex items-center rounded-lg border border-line bg-surface/60 p-0.5 font-mono text-xs',
         className,

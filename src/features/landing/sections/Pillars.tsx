@@ -6,7 +6,7 @@ import { Reveal } from '@/components/ui/Reveal'
 
 function SimIcon() {
   return (
-    <svg viewBox="0 0 48 48" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6">
+    <svg viewBox="0 0 48 48" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true" focusable="false">
       <circle cx="24" cy="24" r="5" />
       <ellipse cx="24" cy="24" rx="20" ry="8" />
       <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(60 24 24)" />
@@ -16,7 +16,7 @@ function SimIcon() {
 }
 function TestIcon() {
   return (
-    <svg viewBox="0 0 48 48" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6">
+    <svg viewBox="0 0 48 48" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true" focusable="false">
       <rect x="9" y="6" width="30" height="36" rx="3" />
       <path d="M15 16h12M15 24h18M15 32h10" strokeLinecap="round" />
       <path d="m31 28 3 3 5-6" strokeLinecap="round" strokeLinejoin="round" />
@@ -25,7 +25,7 @@ function TestIcon() {
 }
 function AiIcon() {
   return (
-    <svg viewBox="0 0 48 48" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6">
+    <svg viewBox="0 0 48 48" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true" focusable="false">
       <rect x="10" y="14" width="28" height="20" rx="5" />
       <path d="M24 14V8M18 24h.02M30 24h.02" strokeLinecap="round" />
       <path d="M6 22v4M42 22v4" strokeLinecap="round" />

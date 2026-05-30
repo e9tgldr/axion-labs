@@ -3,9 +3,11 @@ import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { renderWithProviders } from '@/test/renderWithProviders'
 import i18n from '@/i18n'
+import App from '@/App'
 import LandingPage from './LandingPage'
 import { Hero } from './sections/Hero'
 import { CurriculumSection } from './sections/CurriculumSection'
+import { SimShowcase } from './sections/SimShowcase'
 
 beforeAll(async () => {
   await i18n.changeLanguage('en')
@@ -32,6 +34,28 @@ describe('Hero WebGL fallback', () => {
     const { container } = renderWithProviders(<Hero />)
     expect(screen.getByTestId('static-hero')).toBeInTheDocument()
     expect(container.querySelector('canvas')).toBeNull()
+  })
+})
+
+describe('SimShowcase i18n', () => {
+  it('translates simulation names per language', async () => {
+    await i18n.changeLanguage('mn')
+    const { unmount } = renderWithProviders(<SimShowcase />)
+    // featured = Projectile Motion -> Mongolian
+    expect(screen.getByText('Шидэлтийн хөдөлгөөн')).toBeInTheDocument()
+    expect(screen.queryByText('Projectile Motion')).toBeNull()
+    unmount()
+    await i18n.changeLanguage('en')
+  })
+})
+
+describe('App skip link', () => {
+  it('exposes a skip-to-content link targeting #main', async () => {
+    await i18n.changeLanguage('en')
+    const { container } = renderWithProviders(<App />)
+    const skip = screen.getByRole('link', { name: /skip to content/i })
+    expect(skip).toHaveAttribute('href', '#main')
+    expect(container.querySelector('main#main')).not.toBeNull()
   })
 })
 

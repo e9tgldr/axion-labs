@@ -13,7 +13,7 @@ export function StatsBand() {
             key={i}
             className="flex items-center justify-center gap-2 py-6 text-center font-mono text-sm uppercase tracking-widest text-muted"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-axion" />
+            <span className="h-1.5 w-1.5 rounded-full bg-orange" />
             {label}
           </div>
         ))}

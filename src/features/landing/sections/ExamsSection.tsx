@@ -9,9 +9,9 @@ function ScoreRing({ score = 92, label }: { score?: number; label: string }) {
   const c = 2 * Math.PI * r
   const offset = c - (score / 100) * c
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4" role="img" aria-label={`${label}: ${score}%`}>
       <div className="relative h-24 w-24">
-        <svg viewBox="0 0 80 80" className="h-full w-full -rotate-90">
+        <svg viewBox="0 0 80 80" className="h-full w-full -rotate-90" aria-hidden="true" focusable="false">
           <circle cx="40" cy="40" r={r} fill="none" stroke="#1E2A3F" strokeWidth="7" />
           <circle
             cx="40"

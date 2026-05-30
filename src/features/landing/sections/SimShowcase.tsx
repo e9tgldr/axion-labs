@@ -3,11 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { GlassPanel } from '@/components/ui/GlassPanel'
+import { GridOverlay } from '@/components/ui/GridOverlay'
 import { Pill } from '@/components/ui/Pill'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import { MiniSimFallback } from '@/components/ui/MiniSimFallback'
 import { heroEnabled } from '@/three/webgl'
+import { resolveLang } from '@/i18n'
 import { SIMULATIONS, type Accent } from '@/data/simulations'
 
 const MiniSimTeaser = lazy(() => import('@/three/MiniSimTeaser'))
@@ -20,11 +22,14 @@ const ACCENT: Record<Accent, string> = {
 }
 
 export function SimShowcase() {
-  const { t } = useTranslation('landing')
+  const { t, i18n } = useTranslation('landing')
+  const lang = resolveLang(i18n.language)
+  const featured = SIMULATIONS[0]
+  const catalog = SIMULATIONS.slice(1, 7)
 
   return (
-    <section className="relative py-24">
-      <div className="grid-overlay pointer-events-none absolute inset-0 opacity-[0.04]" />
+    <section className="relative border-y border-line bg-surface-2/40 py-24">
+      <GridOverlay className="opacity-[0.04]" />
       <Container className="relative flex flex-col gap-14">
         <SectionHeading eyebrow={t('showcase.eyebrow')} title={t('showcase.title')} subtitle={t('showcase.subtitle')} />
 
@@ -46,8 +51,8 @@ export function SimShowcase() {
               </div>
               <div className="flex items-center justify-between gap-3 border-t border-line p-5">
                 <div>
-                  <div className="font-display text-lg font-bold">{SIMULATIONS[1].name}</div>
-                  <div className="font-mono text-xs text-muted">{SIMULATIONS[1].formula}</div>
+                  <div className="font-display text-lg font-bold">{featured.name[lang]}</div>
+                  <div className="font-mono text-xs text-muted">{featured.formula}</div>
                 </div>
                 <Button size="sm" variant="outline" to="/lab">
                   {t('showcase.cta')}
@@ -57,16 +62,16 @@ export function SimShowcase() {
           </Reveal>
 
           {/* catalog cards */}
-          {SIMULATIONS.slice(2, 8).map((s, i) => (
+          {catalog.map((s, i) => (
             <Reveal key={s.id} delay={i * 60}>
               <GlassPanel className="group flex h-full flex-col gap-3 transition-all hover:-translate-y-1 hover:border-violet/50">
                 <div className="flex items-center justify-between">
-                  <Pill>{s.topic}</Pill>
+                  <Pill>{s.topic[lang]}</Pill>
                   <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
                     {t('curriculum.gradeLabel')} {s.grade}
                   </span>
                 </div>
-                <h3 className={`font-display text-lg font-bold ${ACCENT[s.accent]}`}>{s.name}</h3>
+                <h3 className={`font-display text-lg font-bold ${ACCENT[s.accent]}`}>{s.name[lang]}</h3>
                 <code className="mt-auto font-mono text-xs text-muted">{s.formula}</code>
               </GlassPanel>
             </Reveal>

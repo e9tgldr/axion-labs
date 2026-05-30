@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { useCanvasActive } from './useCanvasActive'
 
 /**
  * Canvas-only orbiting-bob teaser. Default-exported so it can be `React.lazy`-loaded —
@@ -34,11 +35,20 @@ function Orbiter() {
 }
 
 export default function MiniSimTeaser() {
+  const { ref, active } = useCanvasActive()
   return (
-    <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 1.6]} gl={{ alpha: true }} style={{ pointerEvents: 'none' }}>
-      <ambientLight intensity={0.7} />
-      <pointLight position={[4, 4, 4]} intensity={1.4} color="#f472b6" />
-      <Orbiter />
-    </Canvas>
+    <div ref={ref} className="h-full w-full">
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 45 }}
+        dpr={[1, 1.6]}
+        frameloop={active ? 'always' : 'never'}
+        gl={{ alpha: true }}
+        style={{ pointerEvents: 'none' }}
+      >
+        <ambientLight intensity={0.7} />
+        <pointLight position={[4, 4, 4]} intensity={1.4} color="#f472b6" />
+        <Orbiter />
+      </Canvas>
+    </div>
   )
 }

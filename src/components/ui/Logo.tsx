@@ -1,6 +1,5 @@
+import { useId } from 'react'
 import { cn } from '@/lib/cn'
-
-let uid = 0
 
 /** Axion Labs mark: an orbital atom (nucleus + 3 electron rings) in the plasma gradient. */
 export function Logo({
@@ -12,16 +11,20 @@ export function Logo({
   withWordmark?: boolean
   className?: string
 }) {
-  // Unique gradient id so multiple logos on one page don't collide.
-  const gid = `axion-logo-grad-${(uid += 1)}`
+  // Stable, collision-free gradient id (StrictMode-safe, no render side effects).
+  const gid = `axion-logo-grad-${useId()}`
   return (
     <span className={cn('inline-flex items-center gap-2.5', className)}>
       <svg
         width={size}
         height={size}
         viewBox="0 0 100 100"
-        role="img"
-        aria-label="Axion Labs"
+        // When the wordmark is shown the icon is decorative (the text names the brand);
+        // icon-only usage exposes the brand name via role/aria-label.
+        role={withWordmark ? undefined : 'img'}
+        aria-label={withWordmark ? undefined : 'Axion Labs'}
+        aria-hidden={withWordmark ? true : undefined}
+        focusable="false"
         className="shrink-0"
       >
         <defs>

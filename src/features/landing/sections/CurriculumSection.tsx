@@ -5,14 +5,12 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { GlassPanel } from '@/components/ui/GlassPanel'
 import { cn } from '@/lib/cn'
 import { CURRICULUM, GRADES, type Grade } from '@/data/curriculum'
-import { LANGS, type Lang } from '@/i18n'
+import { resolveLang } from '@/i18n'
 
 export function CurriculumSection() {
   const { t, i18n } = useTranslation('landing')
   const [grade, setGrade] = useState<Grade>(9)
-  const lang: Lang = (LANGS as readonly string[]).includes(i18n.language)
-    ? (i18n.language as Lang)
-    : 'mn'
+  const lang = resolveLang(i18n.language)
   const topics = CURRICULUM[grade][lang]
 
   return (
@@ -44,7 +42,7 @@ export function CurriculumSection() {
 
         <GlassPanel className="w-full max-w-3xl">
           <div className="mb-5 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-axion" />
+            <span className="h-1.5 w-1.5 rounded-full bg-orange" />
             {t('curriculum.gradeLabel')} {grade}
           </div>
           <ul className="grid gap-3 sm:grid-cols-2">
